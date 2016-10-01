@@ -1,3 +1,5 @@
+<?php include 'assets/libs/ptms/ptms.php'; ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,13 +26,13 @@
       </div>
       <div id="navbar" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="index.php">Home</a></li>
-          <li><a href="admin.php">Admin</a></li>
+          <li class="active"><a href="">Home</a></li>
+          <li><a href="admin/">Admin</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="active"><a href="">EN</a></li>
-          <li><a href="">FR</a></li>
-          <li><a href="">ES</a></li>
+          <li class="<?php if($_SESSION['lng'] == "en") {echo 'active';} ?>"><a href="en">EN</a></li>
+          <li class="<?php if($_SESSION['lng'] == "fr") {echo 'active';} ?>"><a href="fr">FR</a></li>
+          <li class="<?php if($_SESSION['lng'] == "es") {echo 'active';} ?>"><a href="es">ES</a></li>
         </ul>
       </div>
     </div>
@@ -39,7 +41,11 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12">
-        <h1>Hello, world! <i class="fa fa-globe"></i></h1>
+        <h1><?php __("Hello world!"); ?> <i class="fa fa-globe"></i></h1>
+        <h2><?php __("Welcome"); ?></h2>
+        <h3><?php __("Goodbye"); ?></h3>
+        <h4><?php __("Good night"); ?></h4>
+        <h5><?php __("Good evening"); ?></h5>
       </div>
     </div>
   </div>

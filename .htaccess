@@ -1,0 +1,10 @@
+Options +FollowSymlinks
+RewriteEngine On
+
+#RewriteRule ^en$          ?lang=en [L]
+#RewriteRule ^fr$          ?lang=fr [L]
+#RewriteRule ^es$          ?lang=es [L]
+
+
+RewriteRule ^(fr|en|es)$   ?lang=$1 [L]
+RewriteRule ^(fr|en|es)/(.*)$   ?lang=$1 [L]

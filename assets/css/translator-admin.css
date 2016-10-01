@@ -2,3 +2,12 @@
   background-color: #333;
   border-color: #222;
 }
+
+.translations-table td {
+  width: 25%;
+}
+
+.vnotify-container.vn-top-right {
+  z-index: 25000;
+  top: 60px;
+}
