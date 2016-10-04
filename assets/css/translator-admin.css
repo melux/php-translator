@@ -7,6 +7,12 @@
   width: 25%;
 }
 
+.translations-table th span:first-child,
+.translations-table td span:first-child {
+  padding: 6px 12px;
+  min-width: 80%;
+}
+
 .vnotify-container.vn-top-right {
   z-index: 25000;
   top: 60px;

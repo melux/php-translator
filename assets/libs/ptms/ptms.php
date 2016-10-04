@@ -30,12 +30,7 @@ function getTranslations($lng) {
   return $_SESSION['translations'];
 }
 
-function setTranslation() {
-  global $mysqli;
-  $_SESSION['translations'] = getTranslations($_SESSION['lngs'][$_SESSION['lng']]);
-}
-
-setTranslation();
+$_SESSION['translations'] = getTranslations($_SESSION['lngs'][$_SESSION['lng']]);
 
 function __($keyt) {
   $translation = $keyt;
@@ -108,19 +103,42 @@ function getKeys() {
     }
   }
 
-
-
-  /*for($k=0; $k<count($keys); $k++) {
-    $qk = "SELECT * FROM trl_values WHERE trl_values.key_id='".$keys[$k]['key_id']."'";
-    $rsk = mysqli_query($mysqli, $qk);
-    if($rsk) {
-      while($objk = mysqli_fetch_object($rsk)) {
-        $keys[$k]['values'] = $objk;
-      }
-    }
-  }*/
-
   $_SESSION['keys'] = $keys;
+}
+
+if($_POST['setTranslation'] == true) {
+  $lang_id = $mysqli->real_escape_string($_POST['lang_id']);
+  $key_id = $mysqli->real_escape_string($_POST['key_id']);
+  $value = $mysqli->real_escape_string($_POST['value']);
+
+  setValue($lang_id, $key_id, $value);
+}
+
+function setValue($lang_id, $key_id, $value) {
+  global $mysqli;
+
+  $return = array();
+  $return["type"] = "update";
+  $q="SELECT trl_values.trl_id from trl_values WHERE trl_values.key_id='".$key_id."' AND trl_values.lng_id='".$lang_id."'";
+  $qr = mysqli_query($mysqli,$q);
+  if($qr && mysqli_num_rows($qr) ===0 ) {
+    $qu = "INSERT INTO trl_values (`trl_id`,`lng_id`,`key_id`,`trl_value`) VALUES (NULL,".$lang_id.",".$key_id.",'".$value."');";
+    $return["type"] = "create";
+  }else{
+    $qu = "UPDATE trl_values t SET t.trl_value='".$value."' WHERE t.lng_id=".$lang_id." AND t.key_id=".$key_id;
+    $return["type"] = "update";
+	}
+
+  $qur = mysqli_query($mysqli,$qu);
+  if($qur) {
+    $return["status"] = true;
+  }else{
+    $return["status"] = false;
+  }
+
+  $response = json_encode($return, JSON_FORCE_OBJECT);
+	echo $response;
+
 }
 
 ?>
